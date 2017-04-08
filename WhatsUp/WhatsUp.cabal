@@ -1,0 +1,20 @@
+name:                WhatsUp
+version:             0.1.0.0
+-- synopsis:
+-- description:
+homepage:            https://github.com/akshay2000/WhatsUp#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Akshay Zade
+maintainer:          akshay2000@hotmail.com
+copyright:           MIT
+category:            Web
+build-type:          Simple
+cabal-version:       >=1.10
+extra-source-files:  README.md
+
+executable WhatsUp
+  hs-source-dirs:      src
+  main-is:             Main.hs
+  default-language:    Haskell2010
+  build-depends:       base >= 4.7 && < 5
