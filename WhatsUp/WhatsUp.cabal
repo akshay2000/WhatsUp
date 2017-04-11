@@ -17,5 +17,9 @@ executable WhatsUp
   hs-source-dirs:      src
   main-is:             Main.hs
   default-language:    Haskell2010
-  build-depends:       base >= 4.7 && < 5, time
+  build-depends:       base >= 4.7 && < 5
+                     , time
+                     , containers
   other-modules:       Parser.MessageParser
+                     , Statistics.Tokenizer
+                     , Statistics.WordCount
