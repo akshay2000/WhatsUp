@@ -23,3 +23,4 @@ executable WhatsUp
   other-modules:       Parser.MessageParser
                      , Statistics.Tokenizer
                      , Statistics.WordCount
+                     , Statistics.WordFrequency
