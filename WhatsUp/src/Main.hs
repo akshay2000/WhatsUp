@@ -3,6 +3,7 @@ module Main (main) where
 import Parser.MessageParser
 import Statistics.WordCount
 import Statistics.WordFrequency
+import Statistics.LineCount
 import System.Environment
 import Data.List
 
@@ -17,4 +18,4 @@ main = do
     messages = lines fileContent
     parsedMessages = parseAll messages
   --putStrLn (unlines (map (show . (\ m -> (text m, length (text m)))) parsedMessages))
-  print (wordFrequency parsedMessages)
+  print (averageLineLength parsedMessages)

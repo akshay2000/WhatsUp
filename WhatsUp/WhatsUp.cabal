@@ -24,3 +24,4 @@ executable WhatsUp
                      , Statistics.Tokenizer
                      , Statistics.WordCount
                      , Statistics.WordFrequency
+                     , Statistics.LineCount
