@@ -12,10 +12,10 @@ main = do
   putStrLn "Hey world!"
   args <- getArgs
   putStrLn (concat args)
-  putStrLn "What's Up!"  
+  putStrLn "What's Up!"
   fileContent <- readFile (head args)
   let
     messages = lines fileContent
     parsedMessages = parseAll messages
   --putStrLn (unlines (map (show . (\ m -> (text m, length (text m)))) parsedMessages))
-  print (averageLineLength parsedMessages)
+  print (lineCountDistribution parsedMessages)
