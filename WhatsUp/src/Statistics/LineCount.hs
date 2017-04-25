@@ -3,9 +3,11 @@ module Statistics.LineCount
     , averageLineLength 
     , linesPerMessage
     , lineCountDistribution
+    , CountDistribution
     ) where
 
 import Parser.MessageParser
+import Common.Types
 import qualified Data.Map as M
 
 lineCount :: [Message] -> M.Map String Int
@@ -36,8 +38,6 @@ linesPerMessage messages =
         lineCounts = M.map fromIntegral (lineCount filtered)
     in
         M.unionWith (/) lineCounts messageCounts
-
-type CountDistribution = M.Map Int Int
 
 lineCountDistribution :: [Message] -> M.Map String CountDistribution
 lineCountDistribution [] = M.fromList []

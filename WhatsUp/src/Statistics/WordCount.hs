@@ -1,9 +1,11 @@
 module Statistics.WordCount 
     ( wordCount
+    , wordCountDistribution
     ) where
 
 import Parser.MessageParser
 import Statistics.Tokenizer
+import Common.Types
 import qualified Data.Map as M
 
 wordCount :: [Message] -> M.Map String Int
@@ -13,3 +15,12 @@ wordCount allMsgs =
         personVsCount = map (\m -> (person m, length $ wordsInMessage m)) allMsgs
     in
         M.fromListWith (+) personVsCount
+
+wordCountDistribution :: [Message] -> M.Map String CountDistribution
+wordCountDistribution [] = M.fromList []
+wordCountDistribution messages =
+    let
+        tuples = map (\m -> (person m, [(length $ wordsInMessage m, 1)])) messages
+        grouped = M.fromListWith (++) tuples
+    in
+        M.map (M.fromListWith (+)) grouped
