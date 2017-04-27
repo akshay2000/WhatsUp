@@ -1,5 +1,6 @@
 module Common.Formatter 
     ( formatDistribution
+    , formatDistribution'
     ) where
 
 import Common.Types
@@ -18,3 +19,10 @@ formatDistribution dist =
     in
         concat flattened
 
+formatDistribution' :: CountDistribution' -> [String]
+formatDistribution' dist =
+    let
+        formatDistList = (L.intercalate "," . L.map (show . snd))
+        untupled = M.map (formatDistList . M.toList) dist
+    in
+        L.map (\(cnt, vals) -> show cnt ++ "," ++ vals) (M.toList untupled)

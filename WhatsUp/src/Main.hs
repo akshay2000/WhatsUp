@@ -19,4 +19,4 @@ main = do
     messages = lines fileContent
     parsedMessages = parseAll messages
   --putStrLn (unlines (map (show . (\ m -> (text m, length (text m)))) parsedMessages))
-  print (unlines $ formatDistribution $ wordCountDistribution parsedMessages)
+  print (unlines $ formatDistribution' $ wordCountDistribution' parsedMessages)
