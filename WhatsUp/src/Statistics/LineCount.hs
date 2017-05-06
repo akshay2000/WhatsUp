@@ -2,7 +2,6 @@ module Statistics.LineCount
     ( lineCount
     , averageLineLength 
     , linesPerMessage
-    , lineCountDistribution
     , CountDistribution
     ) where
 
@@ -38,12 +37,3 @@ linesPerMessage messages =
         lineCounts = M.map fromIntegral (lineCount filtered)
     in
         M.unionWith (/) lineCounts messageCounts
-
-lineCountDistribution :: [Message] -> M.Map String CountDistribution
-lineCountDistribution [] = M.fromList []
-lineCountDistribution messages =
-    let
-        tuples = map (\m -> (person m, [(length $ lines $ text m, 1)])) messages
-        grouped = M.fromListWith (++) tuples
-    in
-        M.map (M.fromListWith (+)) grouped
