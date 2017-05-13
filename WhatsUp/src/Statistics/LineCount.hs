@@ -2,7 +2,6 @@ module Statistics.LineCount
     ( lineCount
     , averageLineLength 
     , linesPerMessage
-    , CountDistribution
     ) where
 
 import Parser.MessageParser

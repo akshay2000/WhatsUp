@@ -27,3 +27,4 @@ executable WhatsUp
                      , Statistics.LineCount
                      , Common.Types
                      , Common.Formatter
+                     , Common.Constants

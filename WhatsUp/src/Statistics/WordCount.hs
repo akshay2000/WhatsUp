@@ -25,14 +25,3 @@ wordCountDistribution messages =
         grouped = M.fromListWith (++) tuples
     in
         M.map (M.fromListWith (+)) grouped
-
--- wordCountDistribution' :: [Message] -> M.Map Int (M.Map String Int)
--- wordCountDistribution' [] = M.fromList []
--- wordCountDistribution' messages = 
---     let
---         identity = M.fromList(zip (L.nub $ map person messages) (repeat 0))
---         tuples = map (\m -> (length $ wordsInMessage m, [(person m, 1)])) messages
---         grouped = M.fromListWith (++) tuples
---         allGrouped = M.map (M.fromListWith (+)) grouped        
---     in
---         M.map (M.unionWith (+) identity) allGrouped

@@ -6,11 +6,15 @@ module Parser.MessageParser
 
 import Data.Time
 import Data.List
+import Common.Constants
 
 data Message = Message 
     { timeStamp :: UTCTime
     , person :: String
     , text :: String
+    , images :: Int
+    , videos :: Int
+    , voiceNotes ::Int
     } deriving (Show)
 
 startsWithTimeStamp :: String -> Bool
@@ -39,11 +43,32 @@ extractMessage :: String -> String
 extractMessage = drop 2 . dropWhile (/= ':') . drop 24
 
 parseMessage :: String -> Message
-parseMessage x = Message {timeStamp=extractTimeStamp x, person=extractPerson x, text=extractMessage x }
+parseMessage x = Message 
+    { timeStamp=extractTimeStamp x
+    , person=extractPerson x
+    , text=extractMessage x 
+    , images = 0
+    , videos = 0
+    , voiceNotes = 0
+    }
+
+extractMetaData :: Message -> Message
+extractMetaData m 
+    | _IMAGE_OMITTED `isPrefixOf` msgTxt = extractMetaData . incrementImageCount . dropPrefix (length _IMAGE_OMITTED) $ m
+    | _VIDEO_OMITTED `isPrefixOf` msgTxt = extractMetaData . incrementVideoCount . dropPrefix (length _VIDEO_OMITTED) $ m
+    | _VOICE_MESSAGE_OMITTED `isPrefixOf` msgTxt = extractMetaData . incrementVoiceNoteCount . dropPrefix (length _VOICE_MESSAGE_OMITTED) $ m
+    | otherwise = m
+    where
+        msgTxt = text m
+        incrementImageCount m = m { images = images m + 1 }
+        incrementVideoCount m = m { videos = videos m + 1 }
+        incrementVoiceNoteCount m = m { voiceNotes = voiceNotes m + 1 }
+        dropPrefix len m = m { text = drop len (text m) }
+
 
 parseAll :: [String] -> [Message]
 parseAll lines =
     let
         preparedLines = prepare lines
     in
-        map parseMessage preparedLines
+        map (extractMetaData . parseMessage) preparedLines
