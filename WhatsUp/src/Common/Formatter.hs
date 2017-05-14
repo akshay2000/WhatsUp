@@ -1,5 +1,6 @@
 module Common.Formatter 
     ( formatDistribution
+    , formatWordFrequency
     ) where
 
 import Common.Types
@@ -24,3 +25,9 @@ formatDistribution dist =
         allLines = L.map (L.intercalate "," . map show) (removeZeroes indexed)
     in
         ("Index," ++ names) : allLines
+
+formatWordFrequency :: M.Map String (M.Map String Int) -> [String]
+formatWordFrequency m =
+    concatMap (\(person, freq) -> person : formatPersonFrequency freq) (M.toList m)
+    where
+        formatPersonFrequency freq = L.map (\(word, count) -> word ++ "," ++ show count) (M.toList freq)

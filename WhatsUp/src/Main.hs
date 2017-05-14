@@ -19,4 +19,4 @@ main = do
     messages = lines fileContent
     parsedMessages = parseAll messages
   --putStrLn (unlines (map (show . (\ m -> (text m, length (text m)))) parsedMessages))
-  print (unlines  (map show (filter (\m -> images m > 0) parsedMessages)))
+  putStrLn (unlines $ formatWordFrequency $ wordFrequency parsedMessages)

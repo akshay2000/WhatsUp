@@ -12,6 +12,9 @@ punctMapper '.' = ' '
 punctMapper '!' = ' '
 punctMapper '?' = ' '
 punctMapper ',' = ' '
+punctMapper '*' = ' '
+punctMapper '_' = ' '
+punctMapper '\"' = ' '
 punctMapper c = c
 
 wordsInMessage :: Message -> [String]
