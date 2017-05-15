@@ -18,5 +18,7 @@ main = do
   let
     messages = lines fileContent
     parsedMessages = parseAll messages
-  --putStrLn (unlines (map (show . (\ m -> (text m, length (text m)))) parsedMessages))
-  putStrLn (unlines $ formatWordFrequency $ wordFrequency parsedMessages)
+    filterMessages = filter (not . null . links)
+  -- putStrLn (unlines (map (show . (\ m -> (text m, length (text m)))) parsedMessages))
+  -- putStrLn (unlines $ formatWordFrequency $ wordFrequency parsedMessages)
+  putStrLn (unlines .  map show . filterMessages $ parsedMessages)

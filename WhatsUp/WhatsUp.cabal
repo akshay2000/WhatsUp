@@ -20,6 +20,7 @@ executable WhatsUp
   build-depends:       base >= 4.7 && < 5
                      , time
                      , containers
+                     , regex-posix
   other-modules:       Parser.MessageParser
                      , Statistics.Tokenizer
                      , Statistics.WordCount
