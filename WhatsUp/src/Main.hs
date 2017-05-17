@@ -10,15 +10,17 @@ import Data.List
 
 main :: IO ()
 main = do
-  putStrLn "Hey world!"
   args <- getArgs
   putStrLn (concat args)
-  putStrLn "What's Up!"
   fileContent <- readFile (head args)
   let
     messages = lines fileContent
     parsedMessages = parseAll messages
     filterMessages = filter (not . null . links)
-  -- putStrLn (unlines (map (show . (\ m -> (text m, length (text m)))) parsedMessages))
-  -- putStrLn (unlines $ formatWordFrequency $ wordFrequency parsedMessages)
-  putStrLn (unlines .  map show . filterMessages $ parsedMessages)
+    calulation = resolveFunction $ if length args > 1 then args !! 1 else ""
+  putStrLn (unlines . calulation $ parsedMessages)
+
+resolveFunction :: String -> ([Message] -> [String])
+resolveFunction "wordCountDistribution" = formatDistribution . wordCountDistribution
+resolveFunction "wordFrequency" = formatWordFrequency . wordFrequency
+resolveFunction _ = map show
