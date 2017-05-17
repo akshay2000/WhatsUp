@@ -1,6 +1,7 @@
 module Common.Formatter 
     ( formatDistribution
     , formatWordFrequency
+    , formatAggregate
     ) where
 
 import Common.Types
@@ -31,3 +32,9 @@ formatWordFrequency m =
     concatMap (\(person, freq) -> person : formatPersonFrequency freq) (M.toList m)
     where
         formatPersonFrequency freq = L.map (\(word, count) -> word ++ "," ++ show count) (M.toList freq)
+
+formatAggregate :: (Show a) => M.Map String a -> [String]
+formatAggregate m = [headers, values]
+    where
+        headers = L.intercalate "," (M.keys m)
+        values = L.intercalate "," (L.map show (keyOrderedValues m))

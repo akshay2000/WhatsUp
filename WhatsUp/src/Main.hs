@@ -23,4 +23,8 @@ main = do
 resolveFunction :: String -> ([Message] -> [String])
 resolveFunction "wordCountDistribution" = formatDistribution . wordCountDistribution
 resolveFunction "wordFrequency" = formatWordFrequency . wordFrequency
+resolveFunction "averageLineLength" = formatAggregate . averageLineLength
+resolveFunction "linesPerMessage" = formatAggregate . linesPerMessage
+resolveFunction "lineCount" = formatAggregate . lineCount
+resolveFunction "wordCount" = formatAggregate . wordCount
 resolveFunction _ = map show
