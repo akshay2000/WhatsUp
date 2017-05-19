@@ -11,7 +11,6 @@ import Data.List
 main :: IO ()
 main = do
   args <- getArgs
-  putStrLn (concat args)
   fileContent <- readFile (head args)
   let
     messages = lines fileContent
@@ -27,4 +26,5 @@ resolveFunction "averageLineLength" = formatAggregate . averageLineLength
 resolveFunction "linesPerMessage" = formatAggregate . linesPerMessage
 resolveFunction "lineCount" = formatAggregate . lineCount
 resolveFunction "wordCount" = formatAggregate . wordCount
+resolveFunction "uniqueWordCount" = formatAggregate . uniqueWordCount
 resolveFunction _ = map show
