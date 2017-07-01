@@ -26,6 +26,7 @@ executable WhatsUp
                      , Statistics.WordCount
                      , Statistics.WordFrequency
                      , Statistics.LineCount
+                     , Statistics.TimeSlice
                      , Common.Types
                      , Common.Formatter
                      , Common.Constants
