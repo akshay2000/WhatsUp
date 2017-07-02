@@ -17,6 +17,7 @@ Currently, following things can be reported. Ideas welcome.
 - **Line Count:** Reports number of lines texted by each person.
 - **Word Count:** Reports number of words used by each person (duh!).
 - **Unique Word Count:** Reports number of unique words used by each person. If you get a high score on this one, you're either a vocabulary nerd or really bad at spelling.
+- **Slice By Time:** Tells how many messages were sent in which hour of day, day of week or day of month.
 
 ## What do I do with these statistics? ##
 I like to create pretty visualizations using Tableau. [Here](https://public.tableau.com/views/HeAndShe/HisWordCloud?:embed=y&:display_count=yes) is one I created using word frequency.
