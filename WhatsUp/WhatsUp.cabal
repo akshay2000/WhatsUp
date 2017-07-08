@@ -30,3 +30,4 @@ executable WhatsUp
                      , Common.Types
                      , Common.Formatter
                      , Common.Constants
+                     , Common.Utils

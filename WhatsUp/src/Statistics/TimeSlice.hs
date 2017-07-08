@@ -4,6 +4,7 @@ module Statistics.TimeSlice
     ) where
 
 import Common.Types
+import Common.Utils
 import Parser.MessageParser
 import Data.Time
 import qualified Data.Map as M
@@ -12,15 +13,12 @@ import qualified Data.List as L
 data SliceType = Hour | DayOfWeek | DayOfMonth deriving (Show, Read)
 
 sliceByTime :: TimeZone -> SliceType -> [Message] -> CountDistribution
-sliceByTime tz sliceType =
-    groupBySlice . groupByPerson . extractData
-    where
-        extractData = L.map (\m -> (person m, [timeStampToSlice tz sliceType . timeStamp $ m]))
-        groupByPerson = M.fromListWith (++)
-        groupBySlice = M.map groupSliceKeys
-            where
-                groupSliceKeys = M.fromListWith (+) . L.map (\s -> (s, 1))
-        
+sliceByTime tz sliceType messages =
+    let
+        groupedByPerson = group person timeStamp messages
+        groupBySlice = groupAndAggregate (timeStampToSlice tz sliceType) (const 1) (+)
+    in
+        M.map groupBySlice groupedByPerson
 
 timeStampToSlice :: TimeZone -> SliceType -> UTCTime -> Int
 timeStampToSlice tz sliceType uTime = 

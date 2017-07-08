@@ -6,22 +6,20 @@ module Statistics.LineCount
 
 import Parser.MessageParser
 import Common.Types
+import Common.Utils
 import qualified Data.Map as M
 
 lineCount :: [Message] -> M.Map String Int
 lineCount [] = M.fromList []
 lineCount messages =
-    let
-        tuples = map (\m -> (person m, length $ lines $ text m)) messages
-    in
-        M.fromListWith (+) tuples
+    groupAndAggregate person (length . lines . text) (+) messages
 
 averageLineLength :: Fractional a => [Message] -> M.Map String a
 averageLineLength [] = M.fromList []
 averageLineLength messages = 
     let
-        allLengths = map (\m -> (person m, sum (map length (lines $ text m)))) messages
-        lengths = M.map fromIntegral (M.fromListWith (+) allLengths)
+        lengths' = groupAndAggregate person (\m -> sum (map length (lines . text $ m))) (+) messages        
+        lengths = M.map fromIntegral lengths'
         counts = M.map fromIntegral (lineCount messages)
     in
         M.unionWith (/) lengths counts
@@ -31,8 +29,8 @@ linesPerMessage [] = M.fromList []
 linesPerMessage messages =
     let
         filtered = filter (\m -> length (lines $ text m) > 1) messages
-        tuples = map (\m -> (person m, 1)) filtered
-        messageCounts =  M.map fromIntegral (M.fromListWith (+) tuples)
+        messageCounts' = groupAndAggregate person (const 1) (+) filtered
+        messageCounts =  M.map fromIntegral messageCounts'
         lineCounts = M.map fromIntegral (lineCount filtered)
     in
         M.unionWith (/) lineCounts messageCounts

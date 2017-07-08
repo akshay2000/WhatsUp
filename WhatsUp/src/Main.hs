@@ -34,4 +34,4 @@ resolveFunction tz allArgs
     | functName == "sliceByTime"           = formatDistribution . sliceByTime tz (read $ allArgs !! 1)
     | otherwise                            = map show
     where
-      functName = head allArgs
+        functName = head allArgs
